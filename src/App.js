@@ -1,10 +1,12 @@
-import './App.css';
+import Body from './components/Body';
+import {Provider} from 'react-redux'
+import appStore from './redux/appStore';
 
 function App() {
   return (
-    <div className="bg-red-300">
-      Hello There!
-    </div>
+    <Provider store={appStore}>
+      <Body />
+    </Provider>
   );
 }
 
