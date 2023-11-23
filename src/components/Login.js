@@ -3,27 +3,24 @@ import Header from "./Header";
 import { checkValidData } from './utils/validation';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
 import { auth } from './utils/firebase';
-import { useNavigate } from 'react-router-dom';
+import { signInBackgroundImg } from './utils/constants';
 
 const Login = ()=>{
     const [isSignUp, setIsSignUp] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
     
-
     const handleSubmit = ()=>{
         let err=checkValidData(email,password);
         setError(err);
         if(err===null){
 
-            // here we are not dispatching any action as it is done on body component
+            // here we are not dispatching any action as it is done on header component
             if(isSignUp){
                 createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    navigate("/browse");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -35,7 +32,6 @@ const Login = ()=>{
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    navigate("/browse");
                     // ...
                 })
                 .catch((error) => {
@@ -50,7 +46,7 @@ const Login = ()=>{
         <div >
             <Header />
             <div className="absolute">
-                <img src="https://assets.nflxext.com/ffe/siteui/vlv3/a09bb938-2d90-42ae-986e-5a3e4abf9e77/8eb1e781-3494-4aa4-9405-268ca6473e4c/IN-en-20231113-popsignuptwoweeks-perspective_alpha_website_large.jpg" alt="logo" />
+                <img src={signInBackgroundImg} alt="logo" />
             </div>
             <form className="absolute bg-black bg-opacity-80 w-1/4 mx-auto left-0 right-0 my-36 p-12">
                 <h1 className="text-white text-3xl">Sign {isSignUp===true?"Up":"In"}</h1>
